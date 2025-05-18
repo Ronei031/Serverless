@@ -1,0 +1,8 @@
+service: usuarios
+frameworkVersion: "3"
+
+provider: ${file(./providers/provider.yml)}
+
+functions: ${file(./functions/functions.yml)}
+
+resources: ${file(./resources/resources.yml)}

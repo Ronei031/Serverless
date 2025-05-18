@@ -1,0 +1,6 @@
+name: aws
+runtime: python3.11
+memorySize: 128
+region: us-east-1
+timeout: 30
+role: arn:aws:iam::${aws:accountId}:role/LabRole

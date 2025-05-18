@@ -1,0 +1,57 @@
+Resources:
+  AuditoriaQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: auditoria-fila
+
+  UsuariosTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Usuarios
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+  AuditoriaUsuariosTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: AuditoriaUsuarios
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+  UsuariosCriadosTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: UsuariosCriados
+
+  UsuariosTesteTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: UsuariosTeste
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+  ApiGatewayAuthorizer:
+    Type: AWS::ApiGateway::Authorizer
+    Properties:
+      Name: CognitoAuthorizer
+      Type: COGNITO_USER_POOLS
+      IdentitySource: method.request.header.Authorization
+      RestApiId:
+        Ref: ApiGatewayRestApi
+      ProviderARNs:
+        - ${ssm:/usuarios/arn-cognito-userpool}

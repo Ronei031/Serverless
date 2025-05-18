@@ -1,0 +1,91 @@
+listarUsuarios:
+  handler: handler.listar_usuarios
+  events:
+    - http:
+        path: /usuarios
+        method: get
+        authorizer:
+          type: COGNITO_USER_POOLS
+          authorizerId:
+            Ref: ApiGatewayAuthorizer
+
+inserirUsuarios:
+  handler: handler.inserir_usuario
+  environment:
+    AUDITORIA_QUEUE_URL:
+      Ref: AuditoriaQueue
+    SNS_TOPIC_USUARIOS_CRIADOS_ARN: ${ssm:/usuarios/topico-usuario}
+  events:
+    - http:
+        path: /usuarios
+        method: post
+        request:
+          schemas:
+            application/json:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  minLength: 1
+                email:
+                  type: string
+                  format: email
+              required:
+                - nome
+                - email
+              additionalProperties: false
+
+excluirUsuarios:
+  handler: handler.excluir_usuario
+  environment:
+    AUDITORIA_QUEUE_URL:
+      Ref: AuditoriaQueue
+  events:
+    - http:
+        path: /usuarios/{id}
+        method: delete
+        authorizer:
+          type: COGNITO_USER_POOLS
+          authorizerId:
+            Ref: ApiGatewayAuthorizer
+
+atualizarUsuarios:
+  handler: handler.atualizar_usuario
+  environment:
+    AUDITORIA_QUEUE_URL:
+      Ref: AuditoriaQueue
+  events:
+    - http:
+        path: /usuarios/{id}
+        method: put
+        request:
+          schemas:
+            application/json:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  minLength: 1
+                email:
+                  type: string
+                  format: email
+                  minLength: 5
+              additionalProperties: false
+        authorizer:
+          type: COGNITO_USER_POOLS
+          authorizerId:
+            Ref: ApiGatewayAuthorizer
+
+processarAuditoria:
+  handler: handler.processar_auditoria
+  events:
+    - sqs:
+        arn:
+          Fn::GetAtt:
+            - AuditoriaQueue
+            - Arn
+
+consumirUsuarioTeste:
+  handler: handler.consumirUsuarioTeste
+  events:
+    - sns: ${ssm:/usuarios/topico-usuario}
