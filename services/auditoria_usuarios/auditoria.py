@@ -28,7 +28,7 @@ def processar_auditoria(event, context):
 
 def publicar_auditoria(operacao, dados):
     try:
-        mensagem = {"operacao": operacao, "dados": dados, "timestamp": datetime.now()}
+        mensagem = {"operacao": operacao, "dados": dados, "timestamp": datetime.now().isoformat()}
         sqs.send_message(QueueUrl=fila_url, MessageBody=json.dumps(mensagem))
     except Exception as e:
         print(f"Erro ao publicar auditoria: {e}")
