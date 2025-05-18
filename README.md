@@ -52,8 +52,8 @@ Este projeto é uma aplicação **Serverless** desenvolvida com foco em capacita
 
 ---
 
-```plaintext
 ## 📁 Estrutura de Pastas
+```plaintext
 .serverless/               # Artefatos gerados pelo Serverless Framework
 functions/
 ├── functions.yml          # Definição das funções Lambda
