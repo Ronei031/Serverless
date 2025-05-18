@@ -80,7 +80,6 @@ README.md                  # Documentação do projeto
 | Método | Rota                 | Descrição              | Autenticação |
 |--------|----------------------|------------------------|--------------|
 | GET    | `/usuarios`          | Lista todos os usuários | ✅ |
-| GET    | `/usuarios/{id}`     | Busca usuário por ID    | ✅ |
 | POST   | `/usuarios`          | Cria um novo usuário    | ✅ |
 | PUT    | `/usuarios/{id}`     | Atualiza um usuário     | ✅ |
 | DELETE | `/usuarios/{id}`     | Remove um usuário       | ✅ |
