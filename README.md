@@ -1,3 +1,4 @@
+```plaintext
 # 📦 Serverless Application - CRUD de Usuários com Integrações AWS
 
 Este projeto é uma aplicação **Serverless** desenvolvida com foco em capacitação utilizando diversos serviços AWS. A aplicação implementa um CRUD completo de usuários.
@@ -54,7 +55,6 @@ Este projeto é uma aplicação **Serverless** desenvolvida com foco em capacita
 
 ## 📁 Estrutura de Pastas
 
-```plaintext
 .serverless/               # Artefatos gerados pelo Serverless Framework
 functions/
 ├── functions.yml          # Definição das funções Lambda
